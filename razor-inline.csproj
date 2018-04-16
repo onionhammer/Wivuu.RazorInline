@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>0.1.1-preview</Version>
+    <LangVersion>latest</LangVersion>
+    <PackageId>Wivuu.RazorInline</PackageId>
+    <Authors>Erik O'Leary</Authors>
+    <Company>Wivuu</Company>
+    <Product>Wivuu RazorInline</Product>
+    <Description>Render razor views as a string</Description>
+    <AssemblyName>Wivuu.RazorInline</AssemblyName>
+    <RootNamespace>Wivuu.RazorInline</RootNamespace>
+    <ReleaseNotes>
+    - Initial release
+    </ReleaseNotes>
+    <PackageTags>c#;aspnet;razor;email</PackageTags>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.0-preview1-final" />
+  </ItemGroup>
+
+</Project>
