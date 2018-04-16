@@ -1,6 +1,11 @@
+using System.Diagnostics;
 using System.IO;
+using System.Reflection;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.ObjectPool;
 using Wivuu.RazorInline;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -10,11 +15,24 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddRazorInline(this IServiceCollection services, 
                                                         string customApplicationBasePath = null)
         {
+            string applicationName;
             IFileProvider fileProvider;
             if (!string.IsNullOrEmpty(customApplicationBasePath))
-                fileProvider = new PhysicalFileProvider(customApplicationBasePath);
+            {
+                applicationName = Path.GetFileName(customApplicationBasePath);
+                fileProvider    = new PhysicalFileProvider(customApplicationBasePath);
+            }
             else
-                fileProvider = new PhysicalFileProvider(Directory.GetCurrentDirectory());
+            {
+                applicationName = Assembly.GetEntryAssembly()?.GetName()?.Name ?? "Wivuu.RazorInline";
+                fileProvider    = new PhysicalFileProvider(Directory.GetCurrentDirectory());
+            }
+
+            services.AddSingleton<IHostingEnvironment>(new HostingEnvironment
+            {
+                ApplicationName     = applicationName,
+                WebRootFileProvider = fileProvider,
+            });
 
             services.Configure<RazorViewEngineOptions>(options =>
             {
@@ -22,7 +40,13 @@ namespace Microsoft.Extensions.DependencyInjection
                 options.FileProviders.Add(fileProvider);
             });
 
-            return services.AddTransient<ViewRenderService>();
+            var diagnosticSource = new DiagnosticListener("Microsoft.AspNetCore");
+            services.AddSingleton<ObjectPoolProvider, DefaultObjectPoolProvider>();
+            services.AddSingleton<DiagnosticSource>(diagnosticSource);
+            services.AddLogging();
+            services.AddMvc();
+
+            return services.AddScoped<IViewRenderService, ViewRenderService>();
         }
     }
 }
