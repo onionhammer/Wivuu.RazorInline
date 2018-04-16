@@ -39,11 +39,10 @@ namespace Wivuu.RazorInline
         {
             var httpContext   = new DefaultHttpContext { RequestServices = _serviceProvider };
             var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
+            var view          = FindView(actionContext, viewName);
 
             using (var sw = new StringWriter())
             {
-                var view = FindView(actionContext, viewName);
-
                 var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
                 {
                     Model = model
@@ -67,15 +66,11 @@ namespace Wivuu.RazorInline
         {
             var getViewResult = _razorViewEngine.GetView(executingFilePath: null, viewPath: viewName, isMainPage: true);
             if (getViewResult.Success)
-            {
                 return getViewResult.View;
-            }
 
             var findViewResult = _razorViewEngine.FindView(actionContext, viewName, isMainPage: true);
             if (findViewResult.Success)
-            {
                 return findViewResult.View;
-            }
 
             var searchedLocations = getViewResult.SearchedLocations.Concat(findViewResult.SearchedLocations);
             var errorMessage = string.Join(
