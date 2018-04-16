@@ -15,6 +15,7 @@
     - Initial release
     </ReleaseNotes>
     <PackageTags>c#;aspnet;razor;email</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
