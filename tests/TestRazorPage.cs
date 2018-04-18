@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -21,6 +22,8 @@ namespace tests
                 var renderer = scope.ServiceProvider.GetRequiredService<IViewRenderService>();
 
                 var result = await renderer.RenderToStringAsync("ViewTest", null);
+
+                Console.WriteLine(result);
             }
         }
     }
