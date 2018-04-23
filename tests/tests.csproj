@@ -2,8 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <PreserveCompilationContext>true</PreserveCompilationContext>
-    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,12 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\razor-inline\razor-inline.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Views\*.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\tests.views\tests.views.csproj" />
   </ItemGroup>
   
 </Project>

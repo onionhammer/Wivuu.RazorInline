@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "razor-inline", "razor-inlin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{A4C03769-7EC0-4294-A286-CE0F176A5132}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests.views", "tests.views\tests.views.csproj", "{EA55E259-5147-47FB-8C92-25B4394A7B8D}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,5 +49,17 @@ Global
 		{A4C03769-7EC0-4294-A286-CE0F176A5132}.Release|x64.Build.0 = Release|Any CPU
 		{A4C03769-7EC0-4294-A286-CE0F176A5132}.Release|x86.ActiveCfg = Release|Any CPU
 		{A4C03769-7EC0-4294-A286-CE0F176A5132}.Release|x86.Build.0 = Release|Any CPU
+		{EA55E259-5147-47FB-8C92-25B4394A7B8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA55E259-5147-47FB-8C92-25B4394A7B8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA55E259-5147-47FB-8C92-25B4394A7B8D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EA55E259-5147-47FB-8C92-25B4394A7B8D}.Debug|x64.Build.0 = Debug|Any CPU
+		{EA55E259-5147-47FB-8C92-25B4394A7B8D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EA55E259-5147-47FB-8C92-25B4394A7B8D}.Debug|x86.Build.0 = Debug|Any CPU
+		{EA55E259-5147-47FB-8C92-25B4394A7B8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA55E259-5147-47FB-8C92-25B4394A7B8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA55E259-5147-47FB-8C92-25B4394A7B8D}.Release|x64.ActiveCfg = Release|Any CPU
+		{EA55E259-5147-47FB-8C92-25B4394A7B8D}.Release|x64.Build.0 = Release|Any CPU
+		{EA55E259-5147-47FB-8C92-25B4394A7B8D}.Release|x86.ActiveCfg = Release|Any CPU
+		{EA55E259-5147-47FB-8C92-25B4394A7B8D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
