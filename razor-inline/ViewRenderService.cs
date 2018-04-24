@@ -18,6 +18,8 @@ namespace Wivuu.RazorInline
     public interface IViewRenderService
     {
         Task<string> RenderToStringAsync(string viewName, object model);
+
+        Task RenderToTextWriterAsync(string viewName, object model, TextWriter output);
     }
 
     public class ViewRenderService : IViewRenderService
@@ -37,29 +39,35 @@ namespace Wivuu.RazorInline
 
         public async Task<string> RenderToStringAsync(string viewName, object model)
         {
+            using (var sw = new StringWriter())
+            {
+                await RenderToTextWriterAsync(viewName, model, sw);
+
+                return sw.ToString();
+            }
+        }
+
+        public async Task RenderToTextWriterAsync(string viewName, object model, TextWriter output)
+        {
             var httpContext   = new DefaultHttpContext { RequestServices = _serviceProvider };
             var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
             var view          = FindView(actionContext, viewName);
 
-            using (var sw = new StringWriter())
+            var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
             {
-                var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
-                {
-                    Model = model
-                };
+                Model = model
+            };
 
-                var viewContext = new ViewContext(
-                    actionContext,
-                    view,
-                    viewDictionary,
-                    new TempDataDictionary(actionContext.HttpContext, _tempDataProvider),
-                    sw,
-                    new HtmlHelperOptions()
-                );
+            var viewContext = new ViewContext(
+                actionContext,
+                view,
+                viewDictionary,
+                new TempDataDictionary(actionContext.HttpContext, _tempDataProvider),
+                output,
+                new HtmlHelperOptions()
+            );
 
-                await view.RenderAsync(viewContext);
-                return sw.ToString();
-            }
+            await view.RenderAsync(viewContext);
         }
 
         private IView FindView(ActionContext actionContext, string viewName)
