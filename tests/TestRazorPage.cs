@@ -13,7 +13,7 @@ namespace tests
         public async Task TestRendering()
         {
             var service = new ServiceCollection()
-                .AddRazorInline()
+                .AddRazorInline("tests")
                 .BuildServiceProvider()
                 .GetRequiredService<IServiceScopeFactory>();
 

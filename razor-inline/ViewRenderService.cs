@@ -72,6 +72,7 @@ namespace Wivuu.RazorInline
 
         private IView FindView(ActionContext actionContext, string viewName)
         {
+            var dir = Environment.CurrentDirectory;
             var getViewResult = _razorViewEngine.GetView(executingFilePath: null, viewPath: viewName, isMainPage: true);
             if (getViewResult.Success)
                 return getViewResult.View;
@@ -83,7 +84,7 @@ namespace Wivuu.RazorInline
             var searchedLocations = getViewResult.SearchedLocations.Concat(findViewResult.SearchedLocations);
             var errorMessage = string.Join(
                 Environment.NewLine,
-                new[] { $"Unable to find view '{viewName}'. The following locations were searched:" }.Concat(searchedLocations)); ;
+                new[] { $"Unable to find view '{viewName}'. The following locations were searched:" }.Concat(searchedLocations));
 
             throw new InvalidOperationException(errorMessage);
         }

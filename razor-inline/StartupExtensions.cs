@@ -13,25 +13,21 @@ namespace Microsoft.Extensions.DependencyInjection
     public static class StartupExtensions
     {
         public static IServiceCollection AddRazorInline(this IServiceCollection services, 
-                                                        string customApplicationBasePath = null)
+                                                        string applicationName = null,
+                                                        string customWorkingDirectory = null)
         {
-            string applicationName;
-            IFileProvider fileProvider;
-            if (!string.IsNullOrEmpty(customApplicationBasePath))
-            {
-                applicationName = Path.GetFileName(customApplicationBasePath);
-                fileProvider    = new PhysicalFileProvider(customApplicationBasePath);
-            }
-            else
-            {
-                applicationName = Assembly.GetEntryAssembly()?.GetName()?.Name ?? "Wivuu.RazorInline";
-                fileProvider    = new PhysicalFileProvider(Directory.GetCurrentDirectory());
-            }
+            applicationName = applicationName 
+                ?? Assembly.GetEntryAssembly()?.GetName()?.Name 
+                ?? "Wivuu.RazorInline";
+
+            var fileProvider = new PhysicalFileProvider(
+                customWorkingDirectory 
+                ?? Directory.GetCurrentDirectory());
 
             services.AddSingleton<IHostingEnvironment>(new HostingEnvironment
             {
                 ApplicationName     = applicationName,
-                WebRootFileProvider = fileProvider,
+                WebRootFileProvider = fileProvider
             });
 
             services.Configure<RazorViewEngineOptions>(options =>
